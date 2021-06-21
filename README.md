@@ -1,4 +1,8 @@
-# hyper63 memory adapter
+# hyper-adapter-memory
+
+[![nest badge](https://nest.land/badge.svg)](https://nest.land/package/hyper-adapter-memory)
+[![current version](https://img.shields.io/github/tag/hyper63/hyper-adapter-memory)](https://github.com/hyper63/hyper-adapter-memory/tags/)
+[![test status](https://github.com/hyper63/hyper-adapter-memory/workflows/.github/workflows/test.yml/badge.svg)](https://github.com/hyper63/hyper-adapter-memory/actions/workflows/test.yml)
 
 The memory adapter is an adapter for the `CACHE` port in the hyper63 gateway.
 

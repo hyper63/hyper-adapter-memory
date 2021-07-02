@@ -1,43 +1,80 @@
-# hyper-adapter-memory
+<h1 align="center">hyper-adapter-memory</h1>
+<p align="center">A Cache port adapter for local memory in the <a href="https://hyper.io/">hyper</a>  service framework</p>
+</p>
+<p align="center">
+  <a href="https://nest.land/package/hyper-adapter-memory"><img src="https://nest.land/badge.svg" alt="Nest Badge" /></a>
+  <a href="https://github.com/hyper63/hyper-adapter-memory/actions/workflows/test.yml"><img src="https://github.com/hyper63/hyper-adapter-memory/actions/workflows/test.yml/badge.svg" alt="Test" /></a>
+  <a href="https://github.com/hyper63/hyper-adapter-memory/tags/"><img src="https://img.shields.io/github/tag/hyper63/hyper-adapter-memory" alt="Current Version" /></a>
+</p>
 
-[![nest badge](https://nest.land/badge.svg)](https://nest.land/package/hyper-adapter-memory)
-[![current version](https://img.shields.io/github/tag/hyper63/hyper-adapter-memory)](https://github.com/hyper63/hyper-adapter-memory/tags/)
-[![test status](https://github.com/hyper63/hyper-adapter-memory/workflows/.github/workflows/test.yml/badge.svg)](https://github.com/hyper63/hyper-adapter-memory/actions/workflows/test.yml)
+---
 
-The memory adapter is an adapter for the `CACHE` port in the hyper63 gateway.
+## Table of Contents
 
-## How to use
+- [Getting Started](#getting-started)
+- [Installation](#installation)
+- [Features](#features)
+- [Methods](#methods)
+- [Contributing](#contributing)
+- [License](#license)
 
-In your hyper63 project, install the adapter:
-
-```sh
-yarn add @hyper63/adapter-memory
-```
-
-In your `hyper63.config.js` file, import the module.
-
-```js
-import { default as memory } from "@hyper63/adapter-memory";
-```
-
-In the adapters section, add the memory adapter as a plugin:
+## Getting Started
 
 ```js
+import { default as memory } from "https://x.nest.land/hyper-adapter-memory@1.2.5/mod.js";
+
 export default {
-  ...
-  adapters: {
-    ...
-    { port: 'cache', plugins: [memory()]}
-  }
-}
+  app: opine,
+  adapter: [
+    {
+      port: "cache",
+      plugins: [memory()],
+    },
+  ],
+};
 ```
 
-## How to test
+## Installation
 
-```sh
-yarn test
+This is a Deno module available to import from
+[nest.land](https://nest.land/package/hyper-adapter-memory)
+
+deps.js
+
+```js
+export { default as memory } from "https://x.nest.land/hyper-adapter-memory@1.2.5/mod.js";
 ```
 
-## More information
+## Features
 
-https://github.com/hyper63/hyper63
+- Create a named store in `memory`
+- Destroy a named store in `memory`
+- Create a document in a store in `memory`
+- Get a document from a store in `memory`
+- Update a document in a store in `memory`
+- Delete a document from a store in `memory`
+- List documents in a sttore in `memory`
+
+## Methods
+
+This adapter fully implements the Search port and can be used as the
+[hyper Cache service](https://docs.hyper.io/cache-api) adapter
+
+See the full port [here](https://nest.land/package/hyper-port-cache)
+
+## Contributing
+
+Contributions are welcome! See the hyper
+[contribution guide](https://docs.hyper.io/contributing-to-hyper)
+
+## Testing
+
+```
+./scripts/test.sh
+```
+
+To lint, check formatting, and run unit tests
+
+## License
+
+Apache-2.0

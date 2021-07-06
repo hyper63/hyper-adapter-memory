@@ -5,7 +5,7 @@
   "description": "Hyper Cache port adapter for memory",
   "homepage": "https://github.com/hyper63/hyper-adapter-memory",
   "repo": "https://github.com/hyper63/hyper-adapter-memory",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "unstable": false,
   "unlisted": false,
   "files": [

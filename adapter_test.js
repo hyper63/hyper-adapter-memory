@@ -11,8 +11,20 @@ const v4 = v4Generator.generate.bind(v4Generator);
 
 const memory = createAdapter();
 
+Deno.test("error - operate on store that does not exist", async () => {
+  const result = await memory.createDoc({
+    store: "not_found",
+    key: "foo",
+    value: {},
+  });
+
+  assert(!result.ok);
+  assertEquals(result.msg, "store is not found!");
+  assertEquals(result.status, 404);
+});
+
 Deno.test("try to create cache store with no name", async () => {
-  const result = await memory.createStore(null).catch((e) => e);
+  const result = await memory.createStore(null);
 
   assert(!result.ok, "should be false");
   assertEquals(
@@ -21,7 +33,7 @@ Deno.test("try to create cache store with no name", async () => {
     "error msg is correct",
   );
 
-  const result2 = await memory.createStore(undefined).catch((e) => e);
+  const result2 = await memory.createStore(undefined);
 
   assert(!result2.ok, "should be false");
   assertEquals(
@@ -109,6 +121,19 @@ Deno.test("get doc", async () => {
   });
   assertObjectMatch(result, { foo: "bar" });
   await memory.destroyStore(store);
+});
+
+Deno.test("get doc - not found", async () => {
+  const store = v4();
+  await memory.createStore(store);
+  const result = await memory.getDoc({
+    store,
+    key: "not_found",
+  });
+
+  assert(!result.ok);
+  assertEquals(result.msg, "doc not found!");
+  assertEquals(result.status, 404);
 });
 
 Deno.test("update doc", async () => {

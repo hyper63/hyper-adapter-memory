@@ -1,6 +1,7 @@
 import { R } from "./deps.js";
+import { HyperErr } from "./utils.js";
 
-const { keys, merge, omit } = R;
+const { keys, mergeRight, omit } = R;
 
 /**
  * hyper63 memory adapter
@@ -45,10 +46,12 @@ export default function adapter() {
    */
   function createStore(name) {
     if (!name) {
-      return Promise.reject({ ok: false, msg: "name must be a string value" });
+      return Promise.resolve(
+        HyperErr({ status: 422, msg: "name must be a string value" }),
+      );
     }
     const store = new Map();
-    stores = merge({ [name]: store }, stores);
+    stores = mergeRight({ [name]: store }, stores);
     return Promise.resolve({ ok: true });
   }
 
@@ -67,7 +70,9 @@ export default function adapter() {
    */
   function createDoc({ store, key, value }) {
     if (!stores[store]) {
-      return Promise.reject({ ok: false, msg: "store is not found!" });
+      return Promise.resolve(
+        HyperErr({ status: 404, msg: "store is not found!" }),
+      );
     }
 
     stores[store].set(key, value);
@@ -80,12 +85,14 @@ export default function adapter() {
    */
   function getDoc({ store, key }) {
     if (!stores[store]) {
-      return Promise.reject({ ok: false, msg: "store is not found!" });
+      return Promise.resolve(
+        HyperErr({ status: 404, msg: "store is not found!" }),
+      );
     }
     const doc = stores[store].get(key);
     return doc
       ? Promise.resolve(doc)
-      : Promise.reject({ ok: false, status: 404, msg: "doc not found" });
+      : Promise.resolve(HyperErr({ status: 404, msg: "doc not found!" }));
   }
 
   /**
@@ -94,7 +101,9 @@ export default function adapter() {
    */
   function updateDoc({ store, key, value }) {
     if (!stores[store]) {
-      return Promise.reject({ ok: false, msg: "store is not found!" });
+      return Promise.resolve(
+        HyperErr({ status: 404, msg: "store is not found!" }),
+      );
     }
 
     stores[store].set(key, value);
@@ -107,7 +116,9 @@ export default function adapter() {
    */
   function deleteDoc({ store, key }) {
     if (!stores[store]) {
-      return Promise.reject({ ok: false, msg: "store is not found!" });
+      return Promise.resolve(
+        HyperErr({ status: 404, msg: "store is not found!" }),
+      );
     }
 
     stores[store].delete(key);
@@ -120,7 +131,9 @@ export default function adapter() {
    */
   function listDocs({ store, pattern }) {
     if (!stores[store]) {
-      return Promise.reject({ ok: false, msg: "store is not found!" });
+      return Promise.resolve(
+        HyperErr({ status: 404, msg: "store is not found!" }),
+      );
     }
 
     // https://stackoverflow.com/questions/26246601/wildcard-string-comparison-in-javascript
